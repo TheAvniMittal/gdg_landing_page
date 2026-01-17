@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GDG London Summit 2026</title>
+
+  <style>
+    :root {
+      /* English-inspired soft palette */
+      --bg: #f6f4f1;            /* beige */
+      --text: #1f2937;
+      --card: #ffffff;
+      --primary: #5b5fc7;       /* lavender-indigo */
+      --accent: #c9c3e6;        /* light lavender */
+      --muted: #e7e3db;         /* soft beige */
+      --shadow: rgba(0,0,0,0.08);
+    }
+
+    body.dark {
+      --bg: #0f172a;
+      --text: #e5e7eb;
+      --card: #1e293b;
+      --primary: #b4b8ff;
+      --accent: #2a2f6f;
+      --muted: #1e293b;
+      --shadow: rgba(0,0,0,0.25);
+    }
+
+    * { box-sizing: border-box; font-family: "Inter", Arial, sans-serif; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* NAVBAR */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--card);
+      border-bottom: 1px solid var(--muted);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 0.8rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-title { font-weight: 700; color: var(--primary); }
+    .nav-links a {
+      margin-left: 1.2rem;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      left: 0;
+      bottom: -4px;
+      background: var(--primary);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a:hover { color: var(--primary); }
+
+    /* HERO */
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+    }
+
+    .hero {
+      max-width: 1200px;
+      margin: auto;
+      padding: 4rem 1rem 3rem;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .hero h1 { font-size: 2.8rem; margin-bottom: 1rem; }
+    .hero p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; }
+
+    .hero img {
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    /* GENERAL SECTIONS */
+    section { padding: 3rem 1rem; }
+    .container { max-width: 1200px; margin: auto; }
+    .section-title { font-size: 2rem; margin-bottom: 1rem; color: var(--primary); }
+    .section-desc { max-width: 800px; line-height: 1.7; margin-bottom: 2rem; }
+
+    /* INFO GRID */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: var(--card);
+      padding: 1.6rem;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px var(--shadow);
+    }
+
+    .card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.15);
+    }
+
+    /* SPEAKERS */
+    .speakers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+
+    .speaker { text-align: center; }
+
+    .speaker img {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 0.8rem;
+      border: 4px solid var(--accent);
+    }
+
+    .speaker img:hover {
+      transform: scale(1.08);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    }
+
+    /* CTA */
+    .cta {
+      background: var(--accent);
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+
+    button {
+      padding: 0.9rem 1.8rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      background: var(--primary);
+      color: white;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      opacity: 0.9;
+    }
+
+    .toggle {
+      margin-left: 1rem;
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--muted);
+    }
+
+    /* FAQ */
+    .faq { max-width: 800px; }
+    .faq-item { margin-bottom: 1.2rem; }
+    .faq-item h4 { margin-bottom: 0.4rem; }
+
+    footer {
+      padding: 2rem 1rem;
+      text-align: center;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    /* REVEAL EFFECT */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* BACK TO TOP */
+    #backToTop {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: none;
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      background: var(--primary);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-container">
+      <div class="nav-title">GDG LONDON</div>
+      <div class="nav-links">
+        <a href="#about">ABOUT</a>
+        <a href="#speakers">SPEAKERS</a>
+        <a href="#schedule">SCHEDULE</a>
+        <a href="#faqs">FAQS</a>
+        <a href="#register">REGISTER</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header>
+    <div class="hero">
+      <div>
+        <h1>GDG LONDON SUMMIT 2026</h1>
+        <p>
+          A thoughtfully designed Google Developer Group event combining hands-on learning,
+          modern engineering practices, and a strong developer community experience.
+        </p>
+        <p>📅 20 March 2026 · 📍 London, United Kingdom</p>
+        <button onclick="openRegister()">REGISTER NOW</button>
+        <button class="toggle" onclick="toggleTheme()">TOGGLE THEME</button>
+      </div>
+      <img loading="lazy" src="https://images.unsplash.com/photo-1522199755839-a2bacb67c546?auto=format&fit=crop&w=900&q=70" alt="Conference" />
+    </div>
+  </header>
+
+  <!-- COUNTDOWN -->
+  <section id="countdown-section" style="background:linear-gradient(180deg, var(--bg), var(--muted));">
+    <div class="container" style="text-align:center;">
+      <h2 class="section-title">EVENT COUNTDOWN</h2>
+      <p class="section-desc">The excitement begins soon. Mark your calendar and get ready.</p>
+      <div id="countdown" style="display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;">
+        <div class="card"><h3 id="days">0</h3><p>DAYS</p></div>
+        <div class="card"><h3 id="hours">0</h3><p>HOURS</p></div>
+        <div class="card"><h3 id="minutes">0</h3><p>MINUTES</p></div>
+        <div class="card"><h3 id="seconds">0</h3><p>SECONDS</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">ABOUT THE EVENT</h2>
+      <p class="section-desc">
+        GDG London Summit is a fictional yet realistic community-driven conference for developers,
+        designers, and tech enthusiasts. The event focuses on web development, cloud computing,
+        artificial intelligence, and best engineering practices used in real-world products.
+      </p>
+
+      <div class="info-grid">
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d" alt="Workshop" style="width:100%;border-radius:12px;margin-bottom:0.8rem;" />
+          Hands-on workshops led by experienced developers
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7" alt="Talks" style="width:100%;border-radius:12px;margin-bottom:0.8rem;" />
+          Industry-focused talks on Google technologies
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1521747116042-5a810fda9664?auto=format&fit=crop&w=900&q=70" alt="Networking" style="width:100%;border-radius:12px;margin-bottom:0.8rem;" />
+          Networking with local and global tech communities
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d" alt="Mentorship" style="width:100%;border-radius:12px;margin-bottom:0.8rem;" />
+          Career insights, learning paths, and mentorship
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SPEAKERS -->
+  <section id="speakers">
+    <div class="container">
+      <h2 class="section-title">MEET THE SPEAKERS</h2>
+      <div class="speakers">
+        <div class="speaker reveal">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?auto=format&fit=crop&w=300&q=70" alt="Alex Johnson" />
+          <h4>Alex Johnson</h4>
+          <p>Senior Frontend Engineer, Google</p>
+        </div>
+
+        <div class="speaker reveal">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=300&q=70" alt="Emily Carter" />
+          <h4>Emily Carter</h4>
+          <p>Cloud Architect, GCP</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCHEDULE -->
+  <section id="schedule">
+    <div class="container">
+      <h2 class="section-title">EVENT HIGHLIGHTS</h2>
+      <div class="info-grid">
+        <div class="card reveal">Keynote on the Future of Web & AI</div>
+        <div class="card reveal">Live coding sessions & demos</div>
+        <div class="card reveal">Panel discussion with industry experts</div>
+        <div class="card reveal">Community networking & open discussions</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faqs">
+    <div class="container faq">
+      <h2 class="section-title">FREQUENTLY ASKED QUESTIONS</h2>
+      <div class="faq-item">
+        <h4>Is this event free?</h4>
+        <p>Yes, this is a community-driven GDG event and free to attend.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Who can attend?</h4>
+        <p>Students, professionals, and anyone interested in technology.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Will sessions be beginner-friendly?</h4>
+        <p>Yes, the event includes sessions for beginners as well as advanced developers.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="register" class="cta">
+    <h2>READY TO JOIN THE GDG LONDON COMMUNITY?</h2>
+    <p>Register now and be part of an inspiring developer experience.</p>
+    <button onclick="openRegister()">REGISTER FOR THE EVENT</button>
+  </section>
+
+  <!-- BACK TO TOP -->
+  <button id="backToTop">↑</button>
+
+  <!-- REGISTER MODAL -->
+  <div id="registerModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center;">
+    <div style="background:var(--card); padding:2rem; border-radius:18px; width:90%; max-width:500px; box-shadow:0 20px 40px var(--shadow);">
+      <h2 style="color:var(--primary); margin-top:0;">Register for GDG London Summit</h2>
+      <input id="name" type="text" placeholder="Full Name" style="width:100%; padding:0.9rem; margin:0.6rem 0; border-radius:10px; border:1px solid var(--muted);" />
+      <input id="email" type="email" placeholder="Email Address" style="width:100%; padding:0.9rem; margin:0.6rem 0; border-radius:10px; border:1px solid var(--muted);" />
+      <select id="ticket" style="width:100%; padding:0.9rem; margin:0.6rem 0; border-radius:10px; border:1px solid var(--muted);">
+        <option value="">Select Ticket</option>
+        <option value="student">Student</option>
+        <option value="professional">Professional</option>
+        <option value="speaker">Speaker</option>
+      </select>
+
+      <div style="display:flex; justify-content:space-between; margin-top:1rem;">
+        <button onclick="submitForm()">SUBMIT</button>
+        <button onclick="closeRegister()">CANCEL</button>
+      </div>
+
+      <div id="success" style="display:none; background:#D4EDDA; color:#155724; padding:1rem; border-radius:10px; margin-top:1rem;">
+        Registration Successful! 🎉 Check your email for confirmation.
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2026 Google Developer Group London · Fictional Event for Assessment
+  </footer>
+
+  <script>
+    const eventDate = new Date('March 20, 2026 10:00:00').getTime();
+    const reveals = document.querySelectorAll('.reveal');
+    const backToTop = document.getElementById('backToTop');
+
+    // COUNTDOWN TIMER
+    function startCountdown() {
+      const timer = setInterval(() => {
+        const now = new Date().getTime();
+        const diff = eventDate - now;
+
+        if (diff <= 0) {
+          clearInterval(timer);
+          return;
+        }
+
+        document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+        document.getElementById('hours').innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        document.getElementById('minutes').innerText = Math.floor((diff / (1000 * 60)) % 60);
+        document.getElementById('seconds').innerText = Math.floor((diff / 1000) % 60);
+      }, 1000);
+    }
+
+    // REVEAL ANIMATION
+    function initReveal() {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('active');
+        });
+      }, { threshold: 0.2 });
+
+      reveals.forEach(r => observer.observe(r));
+    }
+
+    // BACK TO TOP
+    function initBackToTop() {
+      window.addEventListener('scroll', () => {
+        backToTop.style.display = window.scrollY > 400 ? 'block' : 'none';
+      });
+
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    // THEME TOGGLE
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+    }
+
+    // REGISTER MODAL
+    function openRegister() {
+      document.getElementById('registerModal').style.display = 'flex';
+    }
+
+    function closeRegister() {
+      document.getElementById('registerModal').style.display = 'none';
+      document.getElementById('success').style.display = 'none';
+    }
+
+    function submitForm() {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const ticket = document.getElementById('ticket').value;
+
+      if (!name || !email || !ticket) {
+        alert('Please fill all fields!');
+        return;
+      }
+
+      document.getElementById('success').style.display = 'block';
+
+      document.getElementById('name').value = '';
+      document.getElementById('email').value = '';
+      document.getElementById('ticket').value = '';
+
+      setTimeout(() => {
+        closeRegister();
+      }, 2000);
+    }
+
+    // INIT
+    startCountdown();
+    initReveal();
+    initBackToTop();
+  </script>
+
+</body>
+</html>
